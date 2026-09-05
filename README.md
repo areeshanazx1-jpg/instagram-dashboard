@@ -20,25 +20,38 @@ A production-grade centralized web dashboard built with Laravel 11 that enables 
 ### Milestone 1: Database Architecture & Core Management UI
 **Status:** ✅ Complete
 
-#### Completed:
-- ✅ Created Laravel 11 project
-- ✅ Configured MySQL database
-- ✅ Created `instagram_accounts` migration with encrypted token field
-- ✅ Created `action_logs` migration with foreign key constraints
-- ✅ Created Eloquent models with relationships
-- ✅ Implemented automatic token encryption/decryption using Laravel Crypt
-- ✅ Created seeders for dummy data
-- ✅ Migrations and seeders executed successfully
+**Completed Features:**
+- ✅ Laravel 11 project setup
+- ✅ MySQL database configuration
+- ✅ `instagram_accounts` migration with encrypted token field
+- ✅ `action_logs` migration with foreign key constraints
+- ✅ Eloquent models with relationships
+- ✅ Automatic token encryption/decryption using Laravel Crypt
+- ✅ Seeders with dummy data
 - ✅ Admin dashboard with statistics cards
 - ✅ Accounts listing with pagination
-- ✅ Status toggle functionality
+- ✅ Status toggle (active/inactive)
 - ✅ Action logs in dashboard
 - ✅ Account delete feature
 - ✅ FormRequest validation
 - ✅ Add Account form
 
 ### Milestone 2: Meta Graph API & OAuth Integration
-**Status:** 🔄 In Progress
+**Status:** 🔄 In Progress (80% Complete)
+
+**Completed:**
+- ✅ Meta Developer App setup (`Social Connect`)
+- ✅ Facebook Login Use Case configured
+- ✅ OAuth 2.0 Handshake (redirect + callback)
+- ✅ Short-lived to Long-lived token exchange
+- ✅ Token encryption using Laravel Crypt
+- ✅ Facebook login integration with dashboard
+- ✅ Token storage in database (encrypted)
+- ✅ Login with Facebook (OAuth flow)
+
+**Pending:**
+- ⬜ Token validation subsystem (cron/scheduler)
+- ⬜ "Login with Facebook" UI button
 
 ### Milestone 3: Asynchronous Queue Engine
 **Status:** ⏳ Scheduled
