@@ -18,9 +18,9 @@ A production-grade centralized web dashboard built with Laravel 11 that enables 
 ## 📅 Project Progress
 
 ### Milestone 1: Database Architecture & Core Management UI
-**Status:** 🔄 In Progress (Day 1 Complete)
+**Status:** ✅ Complete
 
-#### Day 1 Completed:
+#### Completed:
 - ✅ Created Laravel 11 project
 - ✅ Configured MySQL database
 - ✅ Created `instagram_accounts` migration with encrypted token field
@@ -29,17 +29,16 @@ A production-grade centralized web dashboard built with Laravel 11 that enables 
 - ✅ Implemented automatic token encryption/decryption using Laravel Crypt
 - ✅ Created seeders for dummy data
 - ✅ Migrations and seeders executed successfully
-
-#### Day 2 (Pending):
-- ⬜ Admin dashboard with statistics cards
-- ⬜ Accounts listing with pagination
-- ⬜ Status toggle functionality
-- ⬜ Action logs in dashboard
-- ⬜ Account delete feature
-- ⬜ FormRequest validation
+- ✅ Admin dashboard with statistics cards
+- ✅ Accounts listing with pagination
+- ✅ Status toggle functionality
+- ✅ Action logs in dashboard
+- ✅ Account delete feature
+- ✅ FormRequest validation
+- ✅ Add Account form
 
 ### Milestone 2: Meta Graph API & OAuth Integration
-**Status:** ⏳ Scheduled
+**Status:** 🔄 In Progress
 
 ### Milestone 3: Asynchronous Queue Engine
 **Status:** ⏳ Scheduled
@@ -60,5 +59,5 @@ A production-grade centralized web dashboard built with Laravel 11 that enables 
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/areeshanazxl-jpg/instagram-dashboard.git
+git clone https://github.com/areeshanazx1-jpg/instagram-dashboard.git
 cd instagram-dashboard
