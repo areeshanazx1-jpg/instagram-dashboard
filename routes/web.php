@@ -15,3 +15,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/accounts/{account}/toggle-status', [InstagramAccountController::class, 'toggleStatus'])->name('accounts.toggle-status');
     Route::delete('/accounts/{account}', [InstagramAccountController::class, 'destroy'])->name('accounts.destroy');
 });
+
+use App\Http\Controllers\MetaAuthController;
+
+Route::get('/oauth/redirect', [MetaAuthController::class, 'redirectToMeta'])->name('meta.redirect');
+Route::get('/oauth/callback', [MetaAuthController::class, 'handleMetaCallback'])->name('meta.callback');
