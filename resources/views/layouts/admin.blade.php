@@ -8,21 +8,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --ig-purple: #833AB4;
-            --ig-pink: #C13584;
-            --ig-orange: #F77737;
-            --ig-yellow: #FCAF45;
-            --bg-soft: #F4F6F9;
-            --text-dark: #212529;
-            --text-muted: #6c757d;
-            --border-soft: #e9ecef;
-            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
-            --shadow-hover: 0 8px 28px rgba(0, 0, 0, 0.10);
-            --radius-lg: 14px;
+            --brand-primary: #4338ca;
+            --brand-primary-light: #6366f1;
+            --brand-primary-dark: #3730a3;
+            --brand-accent: #0ea5e9;
+            --bg-page: #eef1f8;
+            --bg-soft: #f8fafc;
+            --text-dark: #1e1b3a;
+            --text-muted: #6b7280;
+            --border-soft: #e5e7eb;
+            --shadow-soft: 0 1px 3px rgba(30, 27, 58, 0.06), 0 1px 2px rgba(30, 27, 58, 0.04);
+            --shadow-hover: 0 12px 24px -8px rgba(67, 56, 202, 0.18);
+            --shadow-nav: 0 4px 20px rgba(67, 56, 202, 0.15);
+            --radius-lg: 16px;
             --radius-md: 10px;
         }
 
@@ -35,7 +37,11 @@
         }
 
         body {
-            background-color: var(--bg-soft);
+            background-color: var(--bg-page);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.06) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.06) 0px, transparent 50%);
+            background-attachment: fixed;
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
@@ -44,41 +50,64 @@
 
         /* ===== Navbar ===== */
         .navbar {
-            background: linear-gradient(90deg, var(--ig-purple) 0%, var(--ig-pink) 50%, var(--ig-orange) 100%) !important;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
-            padding: 0.85rem 1.5rem;
+            background: linear-gradient(100deg, #3730a3 0%, #4338ca 45%, #4f46e5 100%) !important;
+            box-shadow: var(--shadow-nav);
+            padding: 0.9rem 1.75rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .navbar-brand {
             font-weight: 700;
-            font-size: 1.3rem;
-            letter-spacing: 0.3px;
+            font-size: 1.28rem;
+            letter-spacing: 0.2px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.65rem;
+            color: #ffffff !important;
         }
 
-        .navbar-brand i {
-            font-size: 1.5rem;
+        .navbar-brand .brand-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .navbar-nav {
+            gap: 0.25rem;
         }
 
         .navbar-nav .nav-link {
             font-weight: 500;
-            padding: 0.5rem 1rem !important;
+            font-size: 0.92rem;
+            padding: 0.55rem 1.1rem !important;
             border-radius: var(--radius-md);
-            transition: background-color 0.2s ease, transform 0.15s ease;
-            color: rgba(255, 255, 255, 0.92) !important;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+            color: rgba(255, 255, 255, 0.82) !important;
         }
 
-        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff !important;
+        }
+
         .navbar-nav .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.18);
-            color: #fff !important;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: var(--brand-primary) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
         }
 
         .navbar-toggler {
             border: none;
             box-shadow: none !important;
+            filter: invert(1) grayscale(1) brightness(2);
         }
 
         /* ===== Layout wrapper ===== */
@@ -87,7 +116,7 @@
             width: 100%;
             max-width: 1320px;
             margin: 0 auto;
-            padding: 2rem 1.5rem 3rem;
+            padding: 2.25rem 1.5rem 3rem;
         }
 
         /* ===== Alerts ===== */
@@ -95,20 +124,21 @@
             border: none;
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-soft);
-            padding: 0.9rem 1.2rem;
+            padding: 1rem 1.25rem;
             font-weight: 500;
+            font-size: 0.92rem;
         }
 
         .alert-success {
-            background-color: #e7f7ee;
-            color: #157347;
-            border-left: 4px solid #198754;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            color: #047857;
+            border-left: 4px solid #10b981;
         }
 
         .alert-danger {
-            background-color: #fdecea;
-            color: #b02a37;
-            border-left: 4px solid #dc3545;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            color: #b91c1c;
+            border-left: 4px solid #ef4444;
         }
 
         /* ===== Reusable card style (available to child views) ===== */
@@ -116,12 +146,12 @@
             border: 1px solid var(--border-soft);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-soft);
-            transition: box-shadow 0.25s ease, transform 0.25s ease;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
         .card:hover {
             box-shadow: var(--shadow-hover);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         .card-header {
@@ -134,27 +164,29 @@
         /* ===== Status badges ===== */
         .badge-status {
             font-weight: 600;
-            padding: 0.4em 0.75em;
+            padding: 0.4em 0.8em;
             border-radius: 20px;
             font-size: 0.78rem;
             letter-spacing: 0.3px;
         }
 
-        .badge-pending  { background-color: #fff3cd; color: #997404; }
-        .badge-success  { background-color: #d1e7dd; color: #146c43; }
-        .badge-failed   { background-color: #f8d7da; color: #b02a37; }
+        .badge-pending  { background-color: #fef3c7; color: #92400e; }
+        .badge-success  { background-color: #d1fae5; color: #065f46; }
+        .badge-failed   { background-color: #fee2e2; color: #991b1b; }
 
         /* ===== Buttons ===== */
         .btn-primary {
-            background: linear-gradient(90deg, var(--ig-purple), var(--ig-pink));
+            background: linear-gradient(100deg, var(--brand-primary), var(--brand-primary-light));
             border: none;
-            font-weight: 500;
+            font-weight: 600;
             border-radius: var(--radius-md);
-            transition: opacity 0.2s ease;
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.28);
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
+            box-shadow: 0 6px 16px rgba(67, 56, 202, 0.38);
+            transform: translateY(-1px);
         }
 
         .btn-outline-secondary {
@@ -182,7 +214,7 @@
         .app-footer {
             background-color: #fff;
             border-top: 1px solid var(--border-soft);
-            padding: 1rem 1.5rem;
+            padding: 1.1rem 1.5rem;
             text-align: center;
             font-size: 0.85rem;
             color: var(--text-muted);
@@ -196,7 +228,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
-                <i class="fab fa-instagram"></i> Instagram Dashboard
+                <span class="brand-icon"><i class="fab fa-instagram"></i></span>
+                Instagram Dashboard
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
