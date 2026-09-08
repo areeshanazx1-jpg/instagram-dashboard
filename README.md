@@ -37,9 +37,9 @@ A production-grade centralized web dashboard built with Laravel 11 that enables 
 - ✅ Add Account form
 
 ### Milestone 2: Meta Graph API & OAuth Integration
-**Status:** 🔄 In Progress (80% Complete)
+**Status:** ✅ Complete
 
-**Completed:**
+**Completed Features:**
 - ✅ Meta Developer App setup (`Social Connect`)
 - ✅ Facebook Login Use Case configured
 - ✅ OAuth 2.0 Handshake (redirect + callback)
@@ -47,14 +47,11 @@ A production-grade centralized web dashboard built with Laravel 11 that enables 
 - ✅ Token encryption using Laravel Crypt
 - ✅ Facebook login integration with dashboard
 - ✅ Token storage in database (encrypted)
-- ✅ Login with Facebook (OAuth flow)
-
-**Pending:**
-- ⬜ Token validation subsystem (cron/scheduler)
-- ⬜ "Login with Facebook" UI button
+- ✅ "Connect with Facebook" button in dashboard
+- ✅ Token validation subsystem (daily cron check)
 
 ### Milestone 3: Asynchronous Queue Engine
-**Status:** ⏳ Scheduled
+**Status:** 🔄 In Progress
 
 ### Milestone 4: Testing & Code Review
 **Status:** ⏳ Scheduled
