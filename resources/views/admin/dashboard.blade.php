@@ -4,6 +4,9 @@
 
 @section('content')
 
+<!-- AOS Animation Library -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+
 <style>
     .dash-wrapper {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -38,6 +41,8 @@
         align-items: center;
         gap: 0.55rem;
         background: linear-gradient(100deg, #833AB4 0%, #C13584 50%, #F77737 100%);
+        background-size: 200% 200%;
+        background-position: 0% 50%;
         color: #fff;
         border: none;
         padding: 0.7rem 1.4rem;
@@ -46,13 +51,18 @@
         font-size: 0.92rem;
         text-decoration: none;
         box-shadow: 0 6px 18px rgba(193, 53, 132, 0.32);
-        transition: box-shadow 0.2s ease, transform 0.15s ease;
+        transition: box-shadow 0.25s ease, transform 0.2s ease, background-position 0.5s ease;
     }
 
     .btn-connect:hover {
         color: #fff;
-        box-shadow: 0 8px 22px rgba(193, 53, 132, 0.42);
-        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(193, 53, 132, 0.48);
+        transform: translateY(-3px) scale(1.02);
+        background-position: 100% 50%;
+    }
+
+    .btn-connect:active {
+        transform: translateY(-1px) scale(0.99);
     }
 
     /* Stat cards */
@@ -63,7 +73,7 @@
         border-radius: var(--radius-lg);
         padding: 1.6rem;
         box-shadow: var(--shadow-soft);
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        transition: box-shadow 0.35s ease, transform 0.35s ease;
         height: 100%;
         overflow: hidden;
     }
@@ -75,6 +85,13 @@
         left: 0;
         right: 0;
         height: 4px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s ease;
+    }
+
+    .stat-card:hover::before {
+        transform: scaleX(1);
     }
 
     .stat-card.c-primary::before { background: linear-gradient(90deg, var(--brand-primary), var(--brand-primary-light)); }
@@ -83,7 +100,7 @@
 
     .stat-card:hover {
         box-shadow: var(--shadow-hover);
-        transform: translateY(-4px);
+        transform: translateY(-6px);
     }
 
     .stat-top {
@@ -108,6 +125,7 @@
         color: var(--text-dark);
         margin: 0;
         line-height: 1;
+        transition: color 0.3s ease;
     }
 
     .stat-icon {
@@ -119,6 +137,11 @@
         justify-content: center;
         font-size: 1.2rem;
         flex-shrink: 0;
+        transition: transform 0.35s ease;
+    }
+
+    .stat-card:hover .stat-icon {
+        transform: scale(1.12) rotate(-6deg);
     }
 
     .stat-icon.blue   { background: linear-gradient(135deg, #eef2ff, #e0e7ff); color: var(--brand-primary); }
@@ -132,6 +155,12 @@
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-soft);
         overflow: hidden;
+        transition: box-shadow 0.35s ease, transform 0.35s ease;
+    }
+
+    .content-card:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-3px);
     }
 
     .content-card-header {
@@ -189,11 +218,12 @@
     }
 
     .dash-table tbody tr {
-        transition: background-color 0.15s ease;
+        transition: background-color 0.2s ease, transform 0.2s ease;
     }
 
     .dash-table tbody tr:hover {
         background: #f8f9fc;
+        transform: scale(1.003);
     }
 
     .id-chip {
@@ -204,6 +234,11 @@
         font-size: 0.78rem;
         padding: 0.2rem 0.55rem;
         border-radius: 6px;
+        transition: background-color 0.2s ease;
+    }
+
+    .dash-table tbody tr:hover .id-chip {
+        background: #e5e7f5;
     }
 
     .status-pill {
@@ -215,6 +250,11 @@
         font-size: 0.76rem;
         font-weight: 600;
         text-transform: capitalize;
+        transition: transform 0.2s ease;
+    }
+
+    .dash-table tbody tr:hover .status-pill {
+        transform: scale(1.05);
     }
 
     .status-pill::before {
@@ -248,7 +288,7 @@
         font-size: 0.82rem;
         font-weight: 600;
         text-decoration: none;
-        transition: all 0.2s ease;
+        transition: all 0.25s ease;
     }
 
     .btn-view-all:hover {
@@ -256,6 +296,7 @@
         color: #fff;
         border-color: var(--brand-primary);
         box-shadow: 0 4px 12px rgba(67, 56, 202, 0.25);
+        transform: translateY(-2px);
     }
 
     .empty-state {
@@ -275,24 +316,48 @@
     .section-gap {
         margin-bottom: 2rem;
     }
+
+    /* Action panel hover effects */
+    #dispatch-action-btn {
+        transition: box-shadow 0.25s ease, transform 0.2s ease, filter 0.2s ease !important;
+    }
+
+    #dispatch-action-btn:hover {
+        box-shadow: 0 8px 20px rgba(5, 150, 105, 0.35) !important;
+        transform: translateY(-2px) !important;
+        filter: brightness(1.05);
+    }
+
+    .content-card-body .form-control {
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .content-card-body .form-control:hover {
+        border-color: var(--brand-primary) !important;
+    }
+
+    .content-card-body .form-control:focus {
+        border-color: var(--brand-primary) !important;
+        box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.12);
+    }
 </style>
 
 <div class="dash-wrapper">
 
     <!-- Header + Connect Button -->
-    <div class="dash-header">
+    <div class="dash-header" data-aos="fade-down" data-aos-duration="600">
         <div>
             <h1 class="dash-title">Dashboard</h1>
             <div class="dash-subtitle">Overview of your connected Instagram accounts and activity</div>
         </div>
         <a href="{{ route('meta.redirect') }}" class="btn-connect">
-            <i class="fab fa-facebook"></i> Connect with Facebook
+           <i class="fab fa-instagram"></i> Connect with Instagram
         </a>
     </div>
 
     <!-- Statistics Cards -->
     <div class="row section-gap g-3">
-        <div class="col-md-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
             <div class="stat-card c-primary">
                 <div class="stat-top">
                     <div>
@@ -303,7 +368,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
             <div class="stat-card c-success">
                 <div class="stat-top">
                     <div>
@@ -314,7 +379,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
             <div class="stat-card c-neutral">
                 <div class="stat-top">
                     <div>
@@ -329,7 +394,7 @@
 
     <!-- Recent Accounts -->
     <div class="row section-gap">
-        <div class="col-md-12">
+        <div class="col-md-12" data-aos="fade-up" data-aos-duration="700">
             <div class="content-card">
                 <div class="content-card-header">
                     <h5><i class="fas fa-users"></i> Recent Accounts</h5>
@@ -378,9 +443,44 @@
         </div>
     </div>
 
+    <!-- Action Panel -->
+    <div class="row section-gap">
+        <div class="col-md-12" data-aos="fade-up" data-aos-duration="700">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h5><i class="fas fa-paper-plane"></i> Instagram Action Panel</h5>
+                </div>
+                <div class="content-card-body" style="padding: 1.6rem;">
+                    <form action="{{ route('admin.actions.dispatch') }}" method="POST">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <input type="text" name="target_username" class="form-control" placeholder="Target Username" required style="border-radius: 8px; border: 1px solid #e2e8f0;">
+                            </div>
+                            <div class="col-md-4">
+                                <select name="action_type" class="form-control" required style="border-radius: 8px; border: 1px solid #e2e8f0;">
+                                    <option value="">Select Action</option>
+                                    <option value="follow">Follow</option>
+                                    <option value="unfollow">Unfollow</option>
+                                    <option value="comment">Comment</option>
+                                    <option value="like">Like</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" id="dispatch-action-btn" class="btn btn-success" style="border-radius: 8px; padding: 0.6rem 1.8rem; font-weight: 600; background: linear-gradient(135deg, #059669, #34d399); border: none; width: 100%;">
+                                    <i class="fas fa-play"></i> Dispatch Action
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Recent Action Logs -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" data-aos="fade-up" data-aos-duration="700">
             <div class="content-card">
                 <div class="content-card-header">
                     <h5><i class="fas fa-list-check"></i> Recent Action Logs</h5>
@@ -413,9 +513,14 @@
                                                     'failed' => 'danger',
                                                     default => 'warning',
                                                 };
+                                                $statusText = match($log->status) {
+                                                    'success' => 'Success: HTTP ' . ($log->response_payload['http_code'] ?? '200'),
+                                                    'failed'  => 'Failed: ' . ($log->response_payload['http_code'] ?? 'API Error'),
+                                                    default   => 'Pending',
+                                                };
                                             @endphp
                                             <span class="status-pill {{ $pillClass }}">
-                                                {{ $log->status }}
+                                                {{ $statusText }}
                                             </span>
                                         </td>
                                         <td>{{ $log->created_at->diffForHumans() }}</td>
@@ -436,4 +541,19 @@
     </div>
 
 </div>
+
+<!-- AOS Animation Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                once: true,
+                offset: 50,
+                easing: 'ease-out-cubic'
+            });
+        }
+    });
+</script>
+
 @endsection

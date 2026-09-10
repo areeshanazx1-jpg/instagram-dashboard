@@ -5,20 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\InstagramAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Crypt;
 
 class MetaAuthController extends Controller
 {
     public function redirectToMeta()
     {
-        $appId = env('META_CLIENT_ID');
+        $appId = env('META_INSTAGRAM_APP_ID');
         $redirectUri = env('META_REDIRECT_URI');
         
-        $url = "https://www.facebook.com/v20.0/dialog/oauth?" . http_build_query([
+        $url = "https://www.instagram.com/oauth/authorize?" . http_build_query([
             'client_id' => $appId,
             'redirect_uri' => $redirectUri,
-            'scope' => 'public_profile',
             'response_type' => 'code',
+            'scope' => 'instagram_business_basic,instagram_business_manage_messages',
         ]);
         
         return redirect($url);
@@ -33,9 +32,10 @@ class MetaAuthController extends Controller
         }
 
         // Exchange code for short-lived token
-        $response = Http::post('https://graph.facebook.com/v20.0/oauth/access_token', [
-            'client_id' => env('META_CLIENT_ID'),
-            'client_secret' => env('META_CLIENT_SECRET'),
+        $response = Http::asForm()->post('https://api.instagram.com/oauth/access_token', [
+            'client_id' => env('META_INSTAGRAM_APP_ID'),
+            'client_secret' => env('META_INSTAGRAM_APP_SECRET'),
+            'grant_type' => 'authorization_code',
             'redirect_uri' => env('META_REDIRECT_URI'),
             'code' => $code,
         ]);
@@ -46,13 +46,13 @@ class MetaAuthController extends Controller
 
         $data = $response->json();
         $shortLivedToken = $data['access_token'];
+        $userId = $data['user_id'];
         
         // Exchange for long-lived token
-        $longLivedResponse = Http::get('https://graph.facebook.com/v20.0/oauth/access_token', [
-            'grant_type' => 'fb_exchange_token',
-            'client_id' => env('META_CLIENT_ID'),
-            'client_secret' => env('META_CLIENT_SECRET'),
-            'fb_exchange_token' => $shortLivedToken,
+        $longLivedResponse = Http::get('https://graph.instagram.com/access_token', [
+            'grant_type' => 'ig_exchange_token',
+            'client_secret' => env('META_INSTAGRAM_APP_SECRET'),
+            'access_token' => $shortLivedToken,
         ]);
 
         if ($longLivedResponse->failed()) {
@@ -62,25 +62,23 @@ class MetaAuthController extends Controller
         $longLivedData = $longLivedResponse->json();
         $longLivedToken = $longLivedData['access_token'];
 
-        // Get user info from Facebook
-        $userResponse = Http::get('https://graph.facebook.com/v20.0/me', [
+        // Get user info
+        $userResponse = Http::get('https://graph.instagram.com/me', [
             'access_token' => $longLivedToken,
-            'fields' => 'id,name',
+            'fields' => 'id,username',
         ]);
 
         $userData = $userResponse->json();
-        $username = $userData['name'] ?? 'facebook_user';
-        $facebookId = $userData['id'] ?? 'unknown';
+        $username = $userData['username'] ?? 'instagram_user';
 
-        // Save to database (auto-encrypted by model mutator)
         InstagramAccount::create([
-            'account_label' => 'My Facebook Account',
+            'account_label' => 'My Instagram Account',
             'username' => $username,
             'access_token' => $longLivedToken,
             'status' => 'active',
             'last_sync_at' => now(),
         ]);
 
-        return redirect('/admin/dashboard')->with('success', 'Facebook account connected successfully!');
+        return redirect('/admin/dashboard')->with('success', 'Instagram account connected successfully!');
     }
 }

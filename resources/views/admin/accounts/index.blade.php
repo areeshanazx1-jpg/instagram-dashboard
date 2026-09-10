@@ -4,6 +4,9 @@
 
 @section('content')
 
+<!-- AOS Animation Library -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+
 <style>
     .acc-wrapper {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -36,6 +39,12 @@
         box-shadow: var(--shadow-soft);
         overflow: hidden;
         margin-bottom: 1.75rem;
+        transition: box-shadow 0.35s ease, transform 0.35s ease;
+    }
+
+    .add-account-card:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-3px);
     }
 
     .add-account-header {
@@ -82,6 +91,10 @@
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
+    .acc-form .form-control:hover {
+        border-color: var(--brand-primary-light);
+    }
+
     .acc-form .form-control:focus {
         border-color: var(--brand-primary-light);
         box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14);
@@ -98,6 +111,8 @@
         gap: 0.5rem;
         width: 100%;
         background: linear-gradient(100deg, var(--brand-primary), var(--brand-primary-light));
+        background-size: 200% 200%;
+        background-position: 0% 50%;
         border: none;
         color: #fff;
         font-weight: 600;
@@ -105,13 +120,18 @@
         padding: 0.6rem 1rem;
         border-radius: var(--radius-md);
         box-shadow: 0 4px 12px rgba(67, 56, 202, 0.28);
-        transition: box-shadow 0.2s ease, transform 0.15s ease;
+        transition: box-shadow 0.25s ease, transform 0.2s ease, background-position 0.5s ease;
     }
 
     .btn-primary-add:hover {
         color: #fff;
-        box-shadow: 0 6px 16px rgba(67, 56, 202, 0.38);
-        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(67, 56, 202, 0.4);
+        transform: translateY(-2px);
+        background-position: 100% 50%;
+    }
+
+    .btn-primary-add:active {
+        transform: translateY(0);
     }
 
     /* Content card / table */
@@ -121,6 +141,12 @@
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-soft);
         overflow: hidden;
+        transition: box-shadow 0.35s ease, transform 0.35s ease;
+    }
+
+    .content-card:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-3px);
     }
 
     .content-card-header {
@@ -155,6 +181,7 @@
         background: #f1f2f8;
         padding: 0.3rem 0.75rem;
         border-radius: 999px;
+        transition: background-color 0.2s ease;
     }
 
     .acc-table {
@@ -187,11 +214,12 @@
     }
 
     .acc-table tbody tr {
-        transition: background-color 0.15s ease;
+        transition: background-color 0.2s ease, transform 0.2s ease;
     }
 
     .acc-table tbody tr:hover {
         background: #f8f9fc;
+        transform: scale(1.003);
     }
 
     .id-chip {
@@ -202,6 +230,11 @@
         font-size: 0.78rem;
         padding: 0.2rem 0.55rem;
         border-radius: 6px;
+        transition: background-color 0.2s ease;
+    }
+
+    .acc-table tbody tr:hover .id-chip {
+        background: #e5e7f5;
     }
 
     .status-pill {
@@ -213,6 +246,11 @@
         font-size: 0.76rem;
         font-weight: 600;
         text-transform: capitalize;
+        transition: transform 0.2s ease;
+    }
+
+    .acc-table tbody tr:hover .status-pill {
+        transform: scale(1.05);
     }
 
     .status-pill::before {
@@ -244,6 +282,14 @@
         font-size: 0.85rem;
         transition: all 0.2s ease;
         cursor: pointer;
+    }
+
+    .btn-icon:hover {
+        transform: translateY(-2px) scale(1.06);
+    }
+
+    .btn-icon:active {
+        transform: translateY(0) scale(0.97);
     }
 
     .btn-icon.pause {
@@ -301,13 +347,13 @@
 
 <div class="acc-wrapper">
 
-    <div class="acc-header">
+    <div class="acc-header" data-aos="fade-down" data-aos-duration="600">
         <h1 class="acc-title">Instagram Accounts</h1>
         <div class="acc-subtitle">Manage connected accounts, tokens, and their sync status</div>
     </div>
 
     <!-- Add Account Form -->
-    <div class="add-account-card">
+    <div class="add-account-card" data-aos="fade-up" data-aos-duration="600">
         <div class="add-account-header">
             <h5><i class="fas fa-user-plus"></i> Add New Account</h5>
         </div>
@@ -338,7 +384,7 @@
     </div>
 
     <!-- Accounts Table -->
-    <div class="content-card">
+    <div class="content-card" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
         <div class="content-card-header">
             <h5><i class="fas fa-users"></i> All Accounts</h5>
             @if($accounts->count() > 0)
@@ -495,11 +541,12 @@
         font-size: 0.88rem;
         padding: 0.55rem 1.3rem;
         border-radius: var(--radius-md);
-        transition: background-color 0.2s ease;
+        transition: background-color 0.2s ease, transform 0.15s ease;
     }
 
     .btn-modal-cancel:hover {
         background: #e5e7f2;
+        transform: translateY(-1px);
     }
 
     .btn-modal-delete {
@@ -521,8 +568,18 @@
     }
 </style>
 
+<!-- AOS Animation Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                once: true,
+                offset: 50,
+                easing: 'ease-out-cubic'
+            });
+        }
+
         const deleteModal = document.getElementById('deleteAccountModal');
         const deleteForm = document.getElementById('deleteAccountForm');
         const deleteLabel = document.getElementById('deleteAccountLabel');

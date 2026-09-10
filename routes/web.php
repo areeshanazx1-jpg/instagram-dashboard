@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstagramAccountController;
+use App\Http\Controllers\MetaAuthController;
+use App\Http\Controllers\ActionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,7 +18,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/accounts/{account}', [InstagramAccountController::class, 'destroy'])->name('accounts.destroy');
 });
 
-use App\Http\Controllers\MetaAuthController;
-
+// OAuth Routes
 Route::get('/oauth/redirect', [MetaAuthController::class, 'redirectToMeta'])->name('meta.redirect');
 Route::get('/oauth/callback', [MetaAuthController::class, 'handleMetaCallback'])->name('meta.callback');
+
+// Action Routes
+Route::post('/admin/actions/dispatch', [ActionController::class, 'dispatch'])->name('admin.actions.dispatch');
