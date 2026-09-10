@@ -40,15 +40,16 @@ A production-grade centralized web dashboard built with Laravel 11 that enables 
 **Status:** ✅ Complete
 
 **Completed Features:**
-- ✅ Meta Developer App setup (`Social Connect`)
-- ✅ Facebook Login Use Case configured
+- ✅ Meta Developer App setup (`In_Connect`)
+- ✅ Instagram Business Login API integration
 - ✅ OAuth 2.0 Handshake (redirect + callback)
 - ✅ Short-lived to Long-lived token exchange
 - ✅ Token encryption using Laravel Crypt
-- ✅ Facebook login integration with dashboard
+- ✅ "Connect with Instagram" button
+- ✅ Instagram account connection with dashboard
 - ✅ Token storage in database (encrypted)
-- ✅ "Connect with Facebook" button in dashboard
 - ✅ Token validation subsystem (daily cron check)
+- ✅ Ngrok HTTPS tunnel for local development
 
 ### Milestone 3: Asynchronous Queue Engine
 **Status:** 🔄 In Progress
@@ -64,6 +65,7 @@ A production-grade centralized web dashboard built with Laravel 11 that enables 
 - PHP 8.2+
 - Composer
 - MySQL 8.0+
+- Ngrok (for local HTTPS tunnel)
 
 ### Installation Steps
 
