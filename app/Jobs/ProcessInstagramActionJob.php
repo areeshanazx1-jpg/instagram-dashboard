@@ -28,11 +28,11 @@ class ProcessInstagramActionJob implements ShouldQueue
         $account = $this->actionLog->instagramAccount;
 
         try {
-            // Real API Call
-            $response = Http::withToken($account->access_token)
-                ->get('https://graph.facebook.com/v20.0/me', [
-                    'fields' => 'id,name',
-                ]);
+            // Instagram Graph API call
+            $response = Http::get('https://graph.instagram.com/v20.0/me', [
+                'fields' => 'id,username',
+                'access_token' => $account->access_token,
+            ]);
 
             if ($response->successful()) {
                 $this->actionLog->update([
@@ -40,6 +40,7 @@ class ProcessInstagramActionJob implements ShouldQueue
                     'response_payload' => [
                         'http_code' => $response->status(),
                         'message' => 'Action processed successfully',
+                        'data' => $response->json(),
                     ],
                 ]);
             } else {

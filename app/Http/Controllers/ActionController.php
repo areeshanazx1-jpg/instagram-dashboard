@@ -16,7 +16,7 @@ class ActionController extends Controller
             'action_type' => 'required|string',
         ]);
 
-        $account = InstagramAccount::where('status', 'active')->first();
+        $account = InstagramAccount::where('status', 'active')->latest()->first();
 
         if (!$account) {
             return redirect()->back()->with('error', 'No active Instagram account found.');
